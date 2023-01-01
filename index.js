@@ -9,7 +9,7 @@ module.exports = {
 
 async function getActiveEvents() {
     const browser = await puppeteer.launch({
-        headless: false
+        //headless: false    <-- For Testing Purposes
     });
     const page = await browser.newPage();
 
@@ -35,7 +35,7 @@ async function getActiveEvents() {
 
 async function getAllEvents() {
     const browser = await puppeteer.launch({
-        headless: false
+        //headless: false    <-- For Testing Purposes
     });
     const page = await browser.newPage();
 

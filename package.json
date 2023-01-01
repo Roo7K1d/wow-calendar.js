@@ -1,6 +1,6 @@
 {
   "name": "wow-calendar.js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A npm package to get the currently active and upcoming in-game events of World of Warcraft.",
   "main": "index.js",
   "scripts": {
