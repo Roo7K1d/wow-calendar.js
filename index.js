@@ -6,13 +6,13 @@ module.exports = {
     getAllEvents
 }
 
-async function getActiveEvents() {
-    return await scrapeEventsFromWowhead('table > tbody > tr.checked');
+function getActiveEvents() {
+    return scrapeEventsFromWowhead('table > tbody > tr.checked');
 }
 
 
-async function getAllEvents() {
-    return await scrapeEventsFromWowhead('table > tbody > tr');
+function getAllEvents() {
+    return scrapeEventsFromWowhead('table > tbody > tr');
 }
 
 async function scrapeEventsFromWowhead(selector) {
