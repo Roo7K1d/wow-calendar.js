@@ -6,54 +6,41 @@ module.exports = {
     getAllEvents
 }
 
-
-async function getActiveEvents() {
-    const browser = await puppeteer.launch({
-        //headless: false    <-- For Testing Purposes
-    });
-    const page = await browser.newPage();
-
-    await page.goto(`https://www.wowhead.com/events`)
-
-    const result = await page.evaluate(() => {
-        const rows = document.querySelectorAll('table > tbody > tr.checked');
-        return Array.from(rows, row => {
-            const columns = row.querySelectorAll('td');
-            return Array.from(columns, column => column.innerText);
-        });
-    });
-
-    let events = [];
-    result.forEach(event => {
-        events.push({name: event[1], duration: event[2], category: event[3]})
-    })
-
-    browser.close();
-    return events;
+function getActiveEvents() {
+    return scrapeEventsFromWowhead('table > tbody > tr.checked');
 }
 
 
-async function getAllEvents() {
-    const browser = await puppeteer.launch({
-        //headless: false    <-- For Testing Purposes
-    });
-    const page = await browser.newPage();
+function getAllEvents() {
+    return scrapeEventsFromWowhead('table > tbody > tr');
+}
 
-    await page.goto(`https://www.wowhead.com/events`)
-
-    const result = await page.evaluate(() => {
-        const rows = document.querySelectorAll('table > tbody > tr');
-        return Array.from(rows, row => {
-            const columns = row.querySelectorAll('td');
-            return Array.from(columns, column => column.innerText);
+async function scrapeEventsFromWowhead(selector) {
+    let browser;
+    try {
+        browser = await puppeteer.launch({
+            //headless: false    <-- For Testing Purposes
         });
-    });
+        const page = await browser.newPage();
 
-    let events = [];
-    result.forEach(event => {
-        events.push({name: event[1], duration: event[2], category: event[3]})
-    })
+        await page.goto(`https://www.wowhead.com/events`)
 
-    browser.close();
-    return events;
+        const result = await page.$$eval(selector, rows => {
+            return rows.map(row => {
+            const columns = row.querySelectorAll("td");
+            return {
+                name: columns[1].innerText,
+                duration: columns[2].innerText,
+                category: columns[3].innerText
+            };
+            });
+        });
+
+        return result;
+    } catch (error) {
+        console.error("Error occurred during scraping:", error);
+    } finally {
+        if(browser)
+            await browser.close();
+    }
 }
