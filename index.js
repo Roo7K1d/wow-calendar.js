@@ -1,25 +1,78 @@
-const puppeteer = require("puppeteer")
+const axios = require('axios');
+const cheerio = require("cheerio");
+const moment = require("moment");
 
+let events = [];
 
 module.exports = {
     getActiveEvents,
     getAllEvents
+};
+
+function getStringBetween(rawString, startingString, endingString) {
+    return rawString.substring(
+        rawString.indexOf(startingString) + 1,
+        rawString.lastIndexOf(endingString)
+    );
 }
 
+
 /**
- * Retrieves all active events from the events list from WoWHead
+ * The core scraping function for the events list from WoWHead.
  *
  * @param  {String}     [locale]    The desired locale of the results, e.g. "de", "en", "es".
  * 
- * @return {Promise}                Returns an array of active event objects
+ * @return {Promise}                Returns an array of objects of all events (no descriptions - request flood protection)
  * 
  * @author RootK1d
- * @since  1.2.0
+ * @since  2.0.0
  * @type   {Function}
  */
 
-function getActiveEvents(locale) {
-    return scrapeEventsFromWowhead('table > tbody > tr.checked', locale);
+function scrapeEvents(locale) {
+
+    // Scrape the events list from WoWHead
+
+    let result = axios.get(`https://www.wowhead.com/${locale}/events`).then(({ data }) => {
+
+        events = [];
+
+        const $ = cheerio.load(data);
+        let site = $.html();
+
+        // Extract the events data from the site using regex
+
+        let eventsData = Array.from(("{" + getStringBetween(getStringBetween(site, "var myTabs", "myTabs.flush()"), "{\"", ");\nnew Listview({")).matchAll('{"category":\\d*,"categoryName":"(?:.*?)","duration0":\\d*,"duration1":\\d*,"endDate":(?:"\\d*-\\d*-\\d* \\d*:\\d*:\\d*"|null),"id":\\d*,"name":"(?:.*?)","startDate":(?:"\\d*-\\d*-\\d* \\d*:\\d*:\\d*"|null),"occurrences":(?:\\[(?:{"start":(?:".*?")),"end":(?:".*?")}\\]|\\[\\]),"filtertype":(?:\\W*\\d*),"rec":(?:\\W*\\d*),"popularity":\\d*}', 'gi'))
+
+        eventsData.forEach((event) => {
+            events.push(JSON.parse(event[0]));
+        });
+
+        return events;
+
+    })
+
+    return result;
+
+}
+
+/**
+ * Retrieves all events from the events list from WoWHead
+ *
+ * @param  {String}     [locale]    The desired locale of the results, e.g. "de", "en", "es".
+ * 
+ * @return {Promise}                Returns an array of all event objects (+ event descriptions)
+ * 
+ * @author RootK1d
+ * @since  2.0.0
+ * @type   {Function}
+ */
+
+function getAllEvents(locale) {
+    // If no locale is provided, default to "en"
+    if (!locale) locale = "en";
+    
+    return scrapeEvents(locale);
 }
 
 
@@ -32,45 +85,58 @@ function getActiveEvents(locale) {
  * @return {Promise}                Returns an array of all event objects
  * 
  * @author RootK1d
- * @since  1.2.0
+ * @since  2.0.0
  * @type   {Function}
  */
 
-function getAllEvents(locale) {
-    return scrapeEventsFromWowhead('table > tbody > tr', locale);
-}
+function getActiveEvents(locale) {
 
-
-
-async function scrapeEventsFromWowhead(selector, locale) {
-
+    // If no locale is provided, default to "en"
     if (!locale) locale = "en";
 
-    let browser;
-    try {
-        browser = await puppeteer.launch({
-            //headless: false    <-- For Testing Purposes
-        });
-        const page = await browser.newPage();
+    let activeEvents = [];
 
-        await page.goto(`https://www.wowhead.com/${locale}/events`)
+    let result = scrapeEvents(locale).then(async (result) => {
+        // Filter out all events that are not active according to the occurrence array
 
-        const result = await page.$$eval(selector, rows => {
-            return rows.map(row => {
-                const columns = row.querySelectorAll("td");
-                return {
-                    name: columns[1].innerText,
-                    duration: columns[2].innerText,
-                    category: columns[3].innerText
-                };
-            });
+        let filteredResults = result.filter((event) => {
+            return event.occurrences.length > 0;
         });
 
-        return result;
-    } catch (error) {
-        console.error("Error occurred during scraping:", error);
-    } finally {
-        if (browser)
-            await browser.close();
-    }
+        for (let i = 0; i < filteredResults.length; i++) {
+
+            //Remove all events that have [] or # in their name
+
+            if (filteredResults[i].name.includes("[]") || filteredResults[i].name.includes("#")) {
+                filteredResults.splice(i, 1);
+            }
+
+            for (let j = 0; j < filteredResults[i].occurrences.length; j++) {
+
+                // Convert the start and end dates to ISO strings
+                let start = new Date(filteredResults[i].occurrences[j].start).toISOString();
+                let end = new Date(filteredResults[i].occurrences[j].end).toISOString();
+
+                // Add active events to the activeEvents array
+                if (moment().isBetween(start, end)) {
+
+                    // Get the event descriptions
+                    let description = axios.get(`https://www.wowhead.com/${locale}/event=${JSON.parse(filteredResults[i].id)}`).then(({ data }) => {
+                        let metaTag = data.match('<meta name="description" content="(?:.*)">', 'gi');
+                        return metaTag[0].replace('<meta name="description" content="', '').replace('">', '');
+                    });
+
+                    // Add the description to the event object and push it to the activeEvents array
+                    filteredResults[i].description = await description;
+                    activeEvents.push(filteredResults[i]);
+                }
+            }
+        }
+
+        return activeEvents;
+
+    });
+
+    return result;
+
 }

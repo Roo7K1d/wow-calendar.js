@@ -1,9 +1,5 @@
-const calendar = require("./index.js")
+const calendar = require("./new_index.js")
 
-calendar.getActiveEvents("de").then(events => {
-    console.log(events)
-})
-
-calendar.getAllEvents().then(events => {
-    console.log(events)
-})
+calendar.getActiveEvents().then((result) => {
+    console.log(result);
+});

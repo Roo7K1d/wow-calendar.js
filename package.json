@@ -1,6 +1,6 @@
 {
   "name": "wow-calendar.js",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "An npm package to get the currently active and upcoming in-game events of World of Warcraft.",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,10 @@
     "warcraft",
     "wow",
     "calendar",
-    "wow-calendar"
+    "wow-calendar",
+    "wow-calendar.js",
+    "npm",
+    "js"
   ],
   "author": "RootK1d",
   "license": "ISC",
@@ -25,6 +28,8 @@
   },
   "homepage": "https://github.com/Roo7K1d/wow-calendar.js#readme",
   "dependencies": {
-    "puppeteer": "^19.11.1"
+    "axios": "^1.6.7",
+    "cheerio": "^1.0.0-rc.12",
+    "moment": "^2.30.1"
   }
 }
