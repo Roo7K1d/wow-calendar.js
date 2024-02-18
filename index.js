@@ -71,7 +71,7 @@ function scrapeEvents(locale) {
 function getAllEvents(locale) {
     // If no locale is provided, default to "en"
     if (!locale) locale = "en";
-    
+
     return scrapeEvents(locale);
 }
 
@@ -107,30 +107,30 @@ function getActiveEvents(locale) {
 
             //Remove all events that have [] or # in their name
 
-            if (filteredResults[i].name.includes("[]") || filteredResults[i].name.includes("#")) {
-                filteredResults.splice(i, 1);
-            }
+            if (!filteredResults[i].name.includes("[]") || !filteredResults[i].name.includes("#")) {
 
-            for (let j = 0; j < filteredResults[i].occurrences.length; j++) {
+                for (let j = 0; j < filteredResults[i].occurrences.length; j++) {
 
-                // Convert the start and end dates to ISO strings
-                let start = new Date(filteredResults[i].occurrences[j].start).toISOString();
-                let end = new Date(filteredResults[i].occurrences[j].end).toISOString();
+                    // Convert the start and end dates to ISO strings
+                    let start = new Date(filteredResults[i].occurrences[j].start).toISOString();
+                    let end = new Date(filteredResults[i].occurrences[j].end).toISOString();
 
-                // Add active events to the activeEvents array
-                if (moment().isBetween(start, end)) {
+                    // Add active events to the activeEvents array
+                    if (moment().isBetween(start, end)) {
 
-                    // Get the event descriptions
-                    let description = axios.get(`https://www.wowhead.com/${locale}/event=${JSON.parse(filteredResults[i].id)}`).then(({ data }) => {
-                        let metaTag = data.match('<meta name="description" content="(?:.*)">', 'gi');
-                        return metaTag[0].replace('<meta name="description" content="', '').replace('">', '');
-                    });
+                        // Get the event descriptions
+                        let description = axios.get(`https://www.wowhead.com/${locale}/event=${JSON.parse(filteredResults[i].id)}`).then(({ data }) => {
+                            let metaTag = data.match('<meta name="description" content="(?:.*)">', 'gi');
+                            return metaTag[0].replace('<meta name="description" content="', '').replace('">', '');
+                        });
 
-                    // Add the description to the event object and push it to the activeEvents array
-                    filteredResults[i].description = await description;
-                    activeEvents.push(filteredResults[i]);
+                        // Add the description to the event object and push it to the activeEvents array
+                        filteredResults[i].description = await description;
+                        activeEvents.push(filteredResults[i]);
+                    }
                 }
             }
+
         }
 
         return activeEvents;
