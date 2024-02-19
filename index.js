@@ -107,7 +107,7 @@ function getActiveEvents(locale) {
 
             //Remove all events that have [] or # in their name
 
-            if (!filteredResults[i].name.includes("[]") || !filteredResults[i].name.includes("#")) {
+            if (!filteredResults[i].name.includes("[]") && !filteredResults[i].name.includes("#")) {
 
                 for (let j = 0; j < filteredResults[i].occurrences.length; j++) {
 
