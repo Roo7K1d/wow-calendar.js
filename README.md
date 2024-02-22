@@ -26,7 +26,7 @@ calendar.getActiveEvents([locale]).then(result => {
 ```js
 const calendar = require("wow-calendar.js");
 
-calendar.getActiveEvents([locale]).then(result => {
+calendar.getAllEvents([locale]).then(result => {
   //Result: Array Of All Events (Objects)
 })
 ```
