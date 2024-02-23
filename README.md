@@ -19,6 +19,9 @@ calendar.getActiveEvents([locale]).then(result => {
   //this function automatically falls back to english and also returns:
   //
   //descriptionFallback: true
+  //
+  //Updating your Node.js version might fix this "Too Many Redirects" issue. It did at least for me.
+  //At the moment it seems to work with v18+.
 })
 ```
 
