@@ -19,18 +19,14 @@ jobs:
       - run: npm ci
       - run: npm test
 
-  publish:
+  publish-github:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       packages: write
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Publish
-        uses: colinparsonsme/publish-node-package@v0.1.0
+      - uses: actions/checkout@v3
+      - run: npm ci
+      - run: npm run build
+      - uses: FrontEndDev-org/publish-node-package-action@v1
         with:
-          npm-token: ${{ secrets.NPM_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          scope: '@Roo7K1d'
+          target: github
