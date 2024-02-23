@@ -5,8 +5,8 @@ name: Node.js Package
 
 on:
   push:
-    branches:
-      - "main/v*"
+    tags:
+      - v**
       
 jobs:
   build:
