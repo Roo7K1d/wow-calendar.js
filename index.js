@@ -85,7 +85,7 @@ function getAllEvents(locale) {
  * @return {Promise}                Returns an array of all event objects
  * 
  * @author RootK1d
- * @since  2.0.0
+ * @since  2.2.0
  * @type   {Function}
  */
 
@@ -119,14 +119,35 @@ function getActiveEvents(locale) {
                     if (moment().isBetween(start, end)) {
 
                         // Get the event descriptions
-                        let description = axios.get(`https://www.wowhead.com/${locale}/event=${JSON.parse(filteredResults[i].id)}`).then(({ data }) => {
-                            let metaTag = data.match('<meta name="description" content="(?:.*)">', 'gi');
-                            return metaTag[0].replace('<meta name="description" content="', '').replace('">', '');
-                        });
+                        try {
+                            let description = axios.get(`https://www.wowhead.com/${locale}/event=${JSON.parse(filteredResults[i].id)}`).then(({ data }) => {
+                                let metaTag = data.match('<meta name="description" content="(?:.*)">', 'gi');
+                                return metaTag[0].replace('<meta name="description" content="', '').replace('">', '');
+                            });
 
-                        // Add the description to the event object and push it to the activeEvents array
-                        filteredResults[i].description = await description;
-                        activeEvents.push(filteredResults[i]);
+                            // Add the description to the event object and push it to the activeEvents array
+                            filteredResults[i].description = await description;
+                            filteredResults[i].descriptionLocale = locale;
+                            // Set a flag to indicate that the description request was successful and no fallback was used
+                            filteredResults[i].descriptionFallback = false;
+                            activeEvents.push(filteredResults[i]);
+
+
+                        } catch {
+
+                            //Fallback to "en" if the chosen description locale request results in too many redirects
+                            let description = axios.get(`https://www.wowhead.com/en/event=${JSON.parse(filteredResults[i].id)}`).then(({ data }) => {
+                                let metaTag = data.match('<meta name="description" content="(?:.*)">', 'gi');
+                                return metaTag[0].replace('<meta name="description" content="', '').replace('">', '');
+                            });
+
+                            // Add the description to the event object and push it to the activeEvents array
+                            filteredResults[i].description = await description;
+                            filteredResults[i].descriptionLocale = "en";
+                            // Set a flag to indicate that the description has been replaced with a fallback
+                            filteredResults[i].descriptionFallback = true;
+                            activeEvents.push(filteredResults[i]);
+                        }
                     }
                 }
             }

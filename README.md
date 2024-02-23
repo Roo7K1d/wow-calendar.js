@@ -12,6 +12,13 @@ const calendar = require("wow-calendar.js");
 
 calendar.getActiveEvents([locale]).then(result => {
   //Result: Array Of All Active Events (Objects; Including Event Descriptions)
+
+  //Additionally
+  //
+  //If the description request in the desired locale results in too many redirects because of URL encoding
+  //this function automatically falls back to english and also returns:
+  //
+  //descriptionFallback: true
 })
 ```
 
