@@ -19,20 +19,18 @@ jobs:
       - run: npm ci
       - run: npm test
 
-  publish-gpr:
-    needs: build
+  publish:
     runs-on: ubuntu-latest
     permissions:
-      packages: write
       contents: read
+      packages: write
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Publish
+        uses: colinparsonsme/publish-node-package@v1
         with:
-          node-version: 18
-          registry-url: https://npm.pkg.github.com/
-          scope: ${{ github.repository_owner }}
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          npm-token: ${{ secrets.NPM_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          scope: '@Roo7K1d'
