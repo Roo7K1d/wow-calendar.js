@@ -33,6 +33,6 @@
     "moment": "^2.30.1"
   },
   "publishConfig": {
-    "@Roo7K1d:registry": "https://npm.pkg.github.com"
+    "@roo7k1d:registry": "https://npm.pkg.github.com"
   }
 }
