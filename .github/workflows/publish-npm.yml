@@ -5,7 +5,7 @@ name: Node.js Package (NPM)
 
 on:
   release:
-    types: [created]
+    types: [edited, released]
 
 jobs:
 
