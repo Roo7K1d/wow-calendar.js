@@ -1,5 +1,5 @@
 {
-  "name": "@roo7k1d/wow-calendar.js",
+  "name": "wow-calendar.js",
   "version": "2.2.2",
   "description": "An npm package to get the currently active and upcoming in-game events of World of Warcraft.",
   "main": "index.js",
