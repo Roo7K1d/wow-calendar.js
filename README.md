@@ -47,5 +47,22 @@ calendar.getAllEvents([locale]).then(result => {
 
 <hr>
 
+### getEvent (Promise)
+
+```js
+const calendar = require("wow-calendar.js");
+
+calendar.getEvent(id, [locale]).then(result => {
+  //Result: Event object
+})
+```
+
+| Parameter | Type | Description | Possible Values |
+| :--- | :--- | :--- | :--- |
+| `id` | `integer` | The WoW event id | `de`, `es`, `fr`, `it`, `pt`, `ru`, `ko`, `cn`
+| `locale` | `string` | **Optional (Default: `en`**). The language you wish the results to be in.| `de`, `es`, `fr`, `it`, `pt`, `ru`, `ko`, `cn`
+
+<hr>
+
 ## Help Wanted!
 Feel free to submit pull requests that improve the README, functions, documentation and overall code quality!
