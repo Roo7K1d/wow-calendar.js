@@ -59,7 +59,7 @@ calendar.getEvent(id, [locale]).then(result => {
 
 | Parameter | Type | Description | Possible Values |
 | :--- | :--- | :--- | :--- |
-| `id` | `integer` | The WoW event id | `de`, `es`, `fr`, `it`, `pt`, `ru`, `ko`, `cn`
+| `id` | `integer` | The WoW event id. | e.g. 181, 643, ...
 | `locale` | `string` | **Optional (Default: `en`**). The language you wish the results to be in.| `de`, `es`, `fr`, `it`, `pt`, `ru`, `ko`, `cn`
 
 <hr>
