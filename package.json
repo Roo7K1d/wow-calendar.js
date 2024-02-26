@@ -1,5 +1,5 @@
 {
-  "name": "wow-calendar.js",
+  "name": "@Roo7K1d/wow-calendar.js",
   "version": "2.3.0",
   "description": "An npm package to get the currently active and upcoming in-game events of World of Warcraft.",
   "main": "index.js",
@@ -33,6 +33,6 @@
     "moment": "^2.30.1"
   },
   "publishConfig": {
-    "@roo7k1d:registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com"
   }
 }
