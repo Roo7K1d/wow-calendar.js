@@ -11,7 +11,7 @@ An npm package that fetches the World of Warcraft ingame events from [WoWHeads C
 const calendar = require("wow-calendar.js");
 
 calendar.getActiveEvents([locale]).then(result => {
-  //Result: Array Of All Active Events (Objects; Including Event Descriptions)
+  //Result: Array Of All Active Events (Objects; Including Event Descriptions & Event Icon URLs)
 
   //Additionally
   //
@@ -53,7 +53,7 @@ calendar.getAllEvents([locale]).then(result => {
 const calendar = require("wow-calendar.js");
 
 calendar.getEvent(id, [locale]).then(result => {
-  //Result: Event object
+  //Result: Event Object (Including Event Descriptions & Event Icon URLs)
 })
 ```
 
