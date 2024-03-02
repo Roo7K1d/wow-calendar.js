@@ -1,5 +1,23 @@
-# wow-calendar.js
-An npm package that fetches the World of Warcraft ingame events from [WoWHeads Calendar](https://wowhead.com/events) using Axios & Cheerio.
+<img src="http://rootk1d.xyz/github/wow-calendar.js/banner.png">
+<p align="center"><i>A web-based dashboard for organizing your roleplay faction.</i></p>
+<div align="center">
+  <a href="https://github.com/roo7k1d/wow-calendar.js/stargazers"><img src="https://img.shields.io/github/stars/roo7k1d/wow-calendar.js?color=yellow" alt="Stars Badge"/></a>
+<a href="https://github.com/roo7k1d/wow-calendar.js/network/members"><img src="https://img.shields.io/github/forks/roo7k1d/wow-calendar.js?color=orange" alt="Forks Badge"/></a>
+<a href="https://github.com/roo7k1d/wow-calendar.js/pulls"><img src="https://img.shields.io/github/issues-pr/roo7k1d/wow-calendar.js" alt="Pull Requests Badge"/></a>
+<a href="https://github.com/roo7k1d/wow-calendar.js/issues"><img src="https://img.shields.io/github/issues/roo7k1d/wow-calendar.js" alt="Issues Badge"/></a>
+<a href="https://github.com/roo7k1d/wow-calendar.js/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/roo7k1d/wow-calendar.js?color=2b9348"></a>
+<a href="https://github.com/roo7k1d/wow-calendar.js/blob/master/LICENSE"><img src="https://img.shields.io/github/license/roo7k1d/wow-calendar.js?color=2b9348" alt="License Badge"/></a>
+<br>
+<a href="https://github.com/roo7k1d/wow-calendar.js/"><img src="https://img.shields.io/github/repo-size/roo7k1d/wow-calendar.js?color=important" alt="License Badge"/></a>
+<a href="https://github.com/roo7k1d/wow-calendar.js/"><img src="https://img.shields.io/tokei/lines/github/roo7k1d/wow-calendar.js?color=yellowgreen" alt="License Badge"/></a>
+<a href="https://github.com/roo7k1d/wow-calendar.js/releases"><img src="https://img.shields.io/github/v/release/roo7k1d/wow-calendar.js?color=success" alt="License Badge"/></a>
+<a href="https://github.com/roo7k1d/wow-calendar.js/commits"><img src="https://img.shields.io/github/last-commit/roo7k1d/wow-calendar.js" alt="License Badge"/></a>
+</div>
+<br>
+<p align="center"><a href="https://github.com/roo7k1d/wow-calendar.js/issues">Report a Bug</a> | <a href="https://github.com/roo7k1d/wow-calendar.js/issues">Request a New Feature</a> | <a href="https://github.com/wow-calendar.js/pulls">Help Develop This Project</a> | <a href="https://ko-fi.com/RootK1d">Fund Me</a></p>
+<p align="center"><i>Loved the project? Please consider giving a star</i> :)</p>
+
+<hr>
 
 
 
