@@ -1,4 +1,4 @@
-<img src="http://rootk1d.xyz/github/wow-calendar.js/bannernew.png">
+<img src="http://rootk1d.xyz/github/wow-calendar.js/github_banner.png">
 <p align="center"><i>A web-based dashboard for organizing your roleplay faction.</i></p>
 <div align="center">
   <a href="https://github.com/roo7k1d/wow-calendar.js/stargazers"><img src="https://img.shields.io/github/stars/roo7k1d/wow-calendar.js?color=yellow" alt="Stars Badge"/></a>
