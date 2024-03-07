@@ -27,7 +27,7 @@ module.exports = {
  * @property {Int8Array} id The event ID.
  * @property {String} name The name of the event.
  * @property {Date} startDate The start date of the event when it was initially released.
- * @property {Array<Object<EventOccurence>>} occurrences An array of all occurrences of the event.
+ * @property {Array<EventOccurence>} occurrences An array of all occurrences of the event.
  * @property {Int8Array} filtertype The WoWHead filter type of the event.
  * @property {Float32Array} rec The WoWHead rec of the event.
  * @property {Int8Array} popularity The WoWHead popularity of the event.
@@ -52,7 +52,7 @@ module.exports = {
  *
  * @param  {String}     [locale="en"]   The desired locale of the results, e.g. "de", "en", "es".
  * 
- * @return {Promise<Array<Event>>}                    Returns an array of all event objects
+ * @return {Promise<Array<Event>>}      Returns an array of all event objects
  * 
  * @author RootK1d
  * @since  2.0.0
@@ -73,7 +73,7 @@ async function getAllEvents(locale) {
  *
  * @param  {String}     [locale="en"]   The desired locale of the results, e.g. "de", "en", "es".
  * 
- * @return {Promise<Array<Event>>}                    Returns an array of all event objects (+ event descriptions)
+ * @return {Promise<Array<Event>>}      Returns an array of all event objects (+ event descriptions)
  * 
  * @author RootK1d
  * @since  2.2.0
@@ -140,7 +140,7 @@ async function getActiveEvents(locale) {
  * @param  {Int8Array}     id          The event ID.
  * @param  {String}        [locale]    The desired locale of the results, e.g. "de", "en", "es".
  * 
- * @return {Promise<Event>}                   Returns an event object.
+ * @return {Promise<Event>}            Returns an event object.
  * 
  * @author RootK1d
  * @since  2.3.0

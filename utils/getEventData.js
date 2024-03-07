@@ -19,10 +19,10 @@ async function getEventData(locale, id) {
         // Get the event descriptions for the chosen locale
 
         let data = axios.get(`https://www.wowhead.com/${locale}/event=${id}`).then(({ data }) => {
-            let descMetaTag = data.match('<meta name="description" content="(?:.*)">', 'gi');
+            let descMetaTag = data.match('<meta name="description" content="(?:.|\n)[^>]*">', 'gi')
             let description = descMetaTag[0].replace('<meta name="description" content="', '').replace('">', '');
 
-            let iconMetaTag = data.match('https:\/\/wow.zamimg.com\/images\/wow\/icons\/large\/calendar_(?:\\w*).jpg', 'gim');
+            let iconMetaTag = data.match('https:\/\/wow.zamimg.com\/images\/wow\/icons\/large\/(?:\\w*).jpg', 'gim');
             let iconURL = iconMetaTag[0];
 
             // Return the data
