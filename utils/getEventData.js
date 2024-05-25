@@ -23,7 +23,7 @@ async function getEventData(locale, id) {
             let description = descMetaTag[0].replace('<meta name="description" content="', '').replace('">', '');
 
             let iconMetaTag = data.match('https:\/\/wow.zamimg.com\/images\/wow\/icons\/large\/(?:\\w*).jpg', 'gim');
-            let iconURL = iconMetaTag[0];
+            let iconURL = iconMetaTag ? iconMetaTag[0] : null;
 
             // Return the data
 
